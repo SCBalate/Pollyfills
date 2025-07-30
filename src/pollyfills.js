@@ -111,7 +111,53 @@ export function setupCounter(element) {
       timer = setTimeout(() => {
         fn.apply(this, args);
       }, delay);
+      return timer;
     };
-    return timer;
+  
+  }
+
+
+  function myThrottle(fn,delay){
+let start =0;
+return function(...args){
+let now =  Date.now();
+if(now-start > delay){
+start = now;
+}
+fn.apply(this,args)
+}
+  }
+
+
+  function promiseAll(promises){
+return new Promise((resolve,reject)=>{
+  if(!Array.isArray(promises)){
+throw new Error("Input must be an Array")
+  }
+  let res =[];
+let completed =0;
+let length = promises.length;
+
+if(length === 0){
+  return resolve(res);
+}
+
+promises.forEach((p,index)=>{
+  Promise.resolve(p).then((value)=>{
+    res[index] = value;
+    completed ++;
+
+    if(completed === length){
+      return resolve(res)
+    }
+  })
+
+ 
+}
+).catch((err)=>{
+  reject(err)
+})
+
+})
   }
 }
