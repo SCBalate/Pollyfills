@@ -1,5 +1,4 @@
-export function setupCounter(element) {
-  //Map custom
+
 
   Array.prototype.myMap = function (cb) {
     let newArr = [];
@@ -160,4 +159,27 @@ promises.forEach((p,index)=>{
 
 })
   }
+
+  // Pollyfill for compose and pipe
+
+  // 1.Compose from right to left
+
+  function compose(...fns){
+    return function(init){
+      let res = init
+for(let i=fns.length-1 ;i <=0 ; i--){
+res = fns[i](res)
 }
+return res;
+    }
+  }
+
+  function pipe(...fns){
+    return function (init){
+      let res = init;
+      for(let i=0; i<fns.length; i++){
+        res = fns[i](res)
+      }
+      return res;
+    }
+  }
