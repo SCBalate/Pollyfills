@@ -70,7 +70,7 @@
     if (typeof this !== 'function') {
       throw new Error('this is not callable');
     }
-    fn = this;
+    context.fn = this;
     return function (...newArgs) {
       return context.apply(context, [...args, ...newArgs]);
     };
